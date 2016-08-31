@@ -1,0 +1,16 @@
+<div class="jumbotron">
+  <p>{{main.title}}</p>
+</div>
+<div class="userInput">
+  <label for="userText">Username</label>
+  <input type="text" id="userText" ng-model="main.username" placeholder="Username">
+  <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+    <button type="button" class="btn btn-secondary" ng-click="main.resourceGet()">Get with Resource</button>
+    <button type="button" class="btn btn-secondary" ng-click="main.httpGet()">Get with $http</button>
+    <button type="button" class="btn btn-secondary" ng-click="main.ajaxGet()">Get with Ajax</button>
+    <button type="button" class="btn btn-secondary" ng-click="main.fakeGetPromise()">Fake get Promise</button>
+  </div>
+</div>
+<div class="userData">
+  {{main.currentUser | json}}
+</div>
