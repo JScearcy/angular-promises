@@ -11,12 +11,16 @@ angular.module('exampleApp')
         main.following = [];
         main.resourceGet = resourceGet;
         main.httpGet = httpGet;
-        main.ajaxGet = ajaxGet;
 
         function resourceGet() {
             main.currentUser = "";
 
             if (main.username.length > 0) {
+                gitHubService.User.followers( 
+                    { username: main.username },
+                    function(res) { console.log(res) },
+                    function(err) { console.error(err) }
+                 );
                 gitHubService.User.get(
                     {username: main.username}, 
                     setUser,
@@ -36,30 +40,6 @@ angular.module('exampleApp')
                         console.error(err);
                     });
             }
-        }
-
-        function ajaxGet() {
-            main.currentUser = "";
-
-            if (main.username.length > 0) {
-                gitHubService.getUserAjax(main.username)
-                    .then(function(username) {
-                        setUser(username);
-                    }).catch(function(err) {
-                        console.error(err);
-                    });
-            }
-        }
-
-        function fakeGetPromise() {
-            main.currentUser = "";
-
-            gitHubService.fakeGetPromise(main.username)
-                .then(function(user) {
-                    setUser(user);
-                }).catch(function(err) {
-                    console.err(err);
-                })
         }
 
         function setUser(user) {
