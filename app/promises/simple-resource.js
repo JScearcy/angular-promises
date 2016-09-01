@@ -30,15 +30,15 @@ function resourceInstance(config) {
     return allActions;
 
     function get(params, success, fail) {
-        var formattedUrl = this.formatUrl(config.url, params);
+        var formattedUrl = formatUrl(config.url, params);
 
-        http.get(config.url, params)
+        http.get(formattedUrl, params)
             .then(success)
             .catch(fail);
     }
 
     function post(params, data, success, fail) {
-        var formattedUrl = this.formatUrl(config.url, params);
+        var formattedUrl = formatUrl(config.url, params);
 
         http.post(formattedUrl, data)
             .then(success)
@@ -51,8 +51,10 @@ function resourceInstance(config) {
         }
         if (params) {
             for (var key in params) {
-                url.replace(":" + key, params[key]);
+                url = url.replace(":" + key, params[key]);
             }
         }
+        console.log(url);
+        return url;
     }
 }

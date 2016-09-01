@@ -17,8 +17,7 @@ function http(options) {
         for (var key in options.params) {
             options.url = options.url.replace(":" + key, options.params[key]);
         }
-    } 
-    console.log(options);
+    }
 
     return http.xmlHttp(options)    
 }
