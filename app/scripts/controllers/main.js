@@ -1,14 +1,16 @@
 'use strict';
 
 angular.module('exampleApp')
-    .controller('MainCtrl', ['gitHubService', function (gitHubService) {
+    .controller('MainCtrl', MainCtrl);
+    
+    MainCtrl.$inject = ['gitHubService'];
+    
+    function MainCtrl (gitHubService) {
         var main = this;
 
         main.title = "Github Resource";
         main.username = "";
         main.currentUser = "";
-        main.followers = [];
-        main.following = [];
         main.resourceGet = resourceGet;
         main.httpGet = httpGet;
 
@@ -18,8 +20,8 @@ angular.module('exampleApp')
             if (main.username.length > 0) {
                 gitHubService.User.followers( 
                     { username: main.username },
-                    function(res) { console.log(res) },
-                    function(err) { console.error(err) }
+                    console.log,
+                    console.error
                  );
                 gitHubService.User.get(
                     {username: main.username}, 
@@ -34,15 +36,12 @@ angular.module('exampleApp')
 
             if (main.username.length > 0) {
                 gitHubService.getUserHttp(main.username)
-                    .then(function(username) {
-                        setUser(username);
-                    }).catch(function(err) {
-                        console.error(err);
-                    });
+                    .then(setUser)
+                    .catch(console.error);
             }
         }
 
         function setUser(user) {
             main.currentUser = user;
         }
-    }]);
+    }
