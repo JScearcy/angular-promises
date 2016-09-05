@@ -1,7 +1,8 @@
-'use strict';
+(function () {
+    'use strict';
 
-angular.module('exampleApp')
-    .controller('MainCtrl', MainCtrl);
+    angular.module('exampleApp')
+        .controller('MainCtrl', MainCtrl);
     
     MainCtrl.$inject = ['gitHubService'];
     
@@ -45,3 +46,4 @@ angular.module('exampleApp')
             main.currentUser = user;
         }
     }
+})();
