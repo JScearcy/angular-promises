@@ -10,14 +10,14 @@ function resource(url, paramDefaults, actions) {
 
 function resourceInstance(config) {
     var allActions = {};
-    if(config.params) {
 
-    }
     if(config.actions) {
         for (var key in config.actions) {
             allActions[key] = function(params, success, fail) {
                 var updatedConfig = config.actions[key];
-                updatedConfig.params = params
+                if (!updatedConfig.method) updatedConfig.method = http.defaultOptions.method;
+                if (!params && config.params) updatedConfig.params = config.params;
+                updatedConfig.params = params 
                 http(updatedConfig)
                     .then(success)
                     .catch(fail);
@@ -54,7 +54,6 @@ function resourceInstance(config) {
                 url = url.replace(":" + key, params[key]);
             }
         }
-        console.log(url);
         return url;
     }
 }
