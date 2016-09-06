@@ -1,13 +1,19 @@
 # Angular $http and $resource
 
 ## Promises
-* Synchronous I/O -> Blocks everything until completed
+* Synchronous I/O -> Blocks everything until completed. Example: sync is the first to console log no matter the order
 * Callback async handling -> Allows other work to be done and calls callback when completed
 * Promise async handling -> (resolve, reject) allows other work to be done and a more readable pattern
-* Sync (obviously) blocks -> Example: sync is the first to console log no matter the order
+
+## $q 
+* A module for handling asynchronous operations
+* Can be similar to Q/jQuery deferred, or like ES6 Promises
+* using $q as a function provides a resolve and reject path to a function, just like a Promise
+* $q.defer() returns a deferred object that in addition to resolve and reject has notify, which can provide updates prior to completion
+* 
 
 ## $http
-* Service for communication with remote http servers
+* Service for communication with remote http servers ... like AJAX
 * Returns a Promise using the $q module
 * Extensible -> 
     1. Custom headers
