@@ -32,6 +32,7 @@ http.get = function httpGet(url, params) {
         options.data = params;
     }
     options.url = url;
+    //return the request's promise
     return this.xmlHttp(options);
 }
 
@@ -46,10 +47,12 @@ http.post = function httpPost(url, body) {
             options.data = data.payload;
         }
     }
+    // return the request's promise
     return this.xmlHttp(options);
 }
 
 http.xmlHttp = function xmlHttp(options) {
+    // return new Promise
     return new Promise(function(resolve, reject) {
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.open(options.method, options.url, true);
@@ -59,15 +62,17 @@ http.xmlHttp = function xmlHttp(options) {
 
         xmlhttp.onload = function () {
             if (this.status >= 200 && this.status < 300) {
-                resolve(xmlhttp.response);
+                // on success resolve with the data
+                resolve(xmlhttp.response); 
             } else {
+                // if it isn't a success status reject with the status and message
                 reject({
                 status: this.status,
                 statusText: xmlhttp.statusText
                 });
             }
         }
-
+        // if there's an error, reject with the status and message
         xmlhttp.onerror = function () {
             reject({
             status: this.status,

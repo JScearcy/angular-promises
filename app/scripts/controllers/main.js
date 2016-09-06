@@ -1,30 +1,38 @@
-'use strict';
+(function () {
+    'use strict';
 
-angular.module('exampleApp')
-    .controller('MainCtrl', ['gitHubService', function (gitHubService) {
+    angular.module('exampleApp')
+        .controller('MainCtrl', MainCtrl);
+    
+    MainCtrl.$inject = ['gitHubService'];
+    
+    function MainCtrl (gitHubService) {
         var main = this;
 
         main.title = "Github Resource";
         main.username = "";
         main.currentUser = "";
-        main.followers = [];
-        main.following = [];
         main.resourceGet = resourceGet;
+        main.resourceTransform = resourceTransform;
         main.httpGet = httpGet;
+        main.httpTransformGet = httpTransformGet;
 
         function resourceGet() {
             main.currentUser = "";
 
             if (main.username.length > 0) {
-                gitHubService.User.followers( 
-                    { username: main.username },
-                    function(res) { console.log(res) },
-                    function(err) { console.error(err) }
-                 );
-                gitHubService.User.get(
-                    {username: main.username}, 
-                    setUser,
-                    console.error
+                main.currentUser = gitHubService.User.get(
+                    {username: main.username}
+                );
+            }
+        }
+
+        function resourceTransform() {
+            main.currentUser = "";
+
+            if (main.username.length > 0) {
+                main.currentUser = gitHubService.User.formatGet(
+                    {username: main.username}
                 );
             }
         }
@@ -34,15 +42,23 @@ angular.module('exampleApp')
 
             if (main.username.length > 0) {
                 gitHubService.getUserHttp(main.username)
-                    .then(function(username) {
-                        setUser(username);
-                    }).catch(function(err) {
-                        console.error(err);
-                    });
+                    .then(setUser)
+                    .catch(console.error);
+            }
+        }
+
+        function httpTransformGet() {
+            main.currentUser = "";
+            
+            if (main.username.length > 0) {
+                gitHubService.transformHttp(main.username)
+                    .then(setUser)
+                    .catch(console.error);
             }
         }
 
         function setUser(user) {
             main.currentUser = user;
         }
-    }]);
+    }
+})();
