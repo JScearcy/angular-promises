@@ -28,5 +28,28 @@
                     data: {}
                 });
             };
+
+            this.transformHttp = function (username) {
+                return $http({
+                    method: "GET",
+                    url: "https://api.github.com/users/" + username,
+                    transformResponse: appendTransform($http.defaults.transformResponse, function (val) {
+                        for (var key in val) {
+                            if (val[key] && typeof val[key].toUpperCase === 'function') {
+                                val[key] = val[key].toUpperCase();
+                            }
+                        }
+                        return val;
+                    })
+                });
+            }
+
+            function appendTransform(defaults, transform) {
+                // angular doesn't guarantee an array
+                defaults = angular.isArray(defaults) ? defaults : [defaults];
+                // Append the new transformation to the defaults
+                return defaults.concat(transform);
+            }
+
         }
     })();

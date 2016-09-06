@@ -6,10 +6,11 @@
       'ngRoute',
       'ngResource'
     ])
-    .config(Routes);
+    .config(Routes)
+    .config(Interceptors);
 
     Routes.$inject = ['$routeProvider'];
-    
+
     function Routes($routeProvider) {
       $routeProvider
         .when('/', {
@@ -20,5 +21,9 @@
         .otherwise({
           redirectTo: '/'
         });
+    }
+
+    function Interceptors($httpProvider) {
+      $httpProvider.interceptors.push('gitHubInterceptor');
     }
   })();
