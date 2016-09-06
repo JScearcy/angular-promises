@@ -31,13 +31,15 @@
 * A factory that creates a resource object which abstracts away setting up singular $http calls for interacting with a RESTful api
 * Underneath the covers each call is using an $http call with a transformResponse function to format the data
 * By default the resource object contains:
+
  ```
-    { 'get':    {method:'GET'},
-      'save':   {method:'POST'},
-      'query':  {method:'GET', isArray:true},
-      'remove': {method:'DELETE'},
-      'delete': {method:'DELETE'} };
+{ 'get':    {method:'GET'},
+  'save':   {method:'POST'},
+  'query':  {method:'GET', isArray:true},
+  'remove': {method:'DELETE'},
+  'delete': {method:'DELETE'} };
 ```
+
 * Data returned contains additional methods prefixed with a $ - $save, $remove, $delete
 * When a resource object method is called an empty object (or array) is returned and then updated upon completion. This sometimes eliminates the need for callbacks
 * A resource method call can take a success and failure callback. Calling one or the other as neccessary
