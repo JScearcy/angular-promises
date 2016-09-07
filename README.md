@@ -3,9 +3,11 @@
 Examples of angular $resource, and $http.
 
 ### Additional References
-[Naive Implementations](https://github.com/JScearcy/angular-promises/tree/master/app/promises)
+[Schedule](https://github.com/JScearcy/angular-promises/blob/master/Schedule.md)
 
-This folder contains naive implementations of a http object and resource object. While it mimics similar functionality the code is not as robust as the actual implementations.
+
+The [promises](https://github.com/JScearcy/angular-promises/tree/master/app/promises) folder contains naive implementations of a http object and resource object. 
+While it mimics the functionality of the $http and $resource modules, the code is not as robust as the actual implementations.
 This is to provide a simpler to understand idea of what is happening "under the covers."
 
 ### Helpful links
