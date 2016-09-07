@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular.module('exampleApp')
@@ -7,14 +7,8 @@
         gitHubService.$inject = ["$resource", "$http"];
         
         function gitHubService($resource, $http) {
-            this.User = $resource("https://api.github.com/users/:username", 
-                {username: "@username"}, {
-                    followers: { method: "GET", url: "https://api.github.com/users/:username/followers", params: { username: "@username" }, isArray: true },
-                    following: { method: "GET", url: "https://api.github.com/users/:username/following", params: { username: "@username" }, isArray: true },
-                    formatGet: { method: "GET", transformResponse: appendTransform($http.defaults.transformResponse, formatUser)}
-                }
-            );
 
+            /* ************** $http ************** */
             this.getUserHttp = function (username) {
                 return $http({
                     method: "GET",
@@ -22,14 +16,15 @@
                 });
             };
 
-            this.postUserHttp = function (username) {
+            this.postUserHttp = function (username, data) {
                 return $http({
                     method: "POST",
                     url: "https://api.github.com/users/" + username,
-                    data: {}
+                    data: data
                 });
             };
 
+            /* ************** transform ************** */
             this.transformHttp = function (username) {
                 return $http({
                     method: "GET",
@@ -46,12 +41,20 @@
             }
 
             function appendTransform(defaults, transform) {
-                // angular doesn't guarantee an array
+                // verify that the defaults are indeed an array
                 defaults = angular.isArray(defaults) ? defaults : [defaults];
-                // Append the new transformation to the defaults
+                
                 return defaults.concat(transform);
             }
 
+            /* ************** $resource ************** */
+            this.User = $resource("https://api.github.com/users/:username", 
+                {username: "@username"}, {
+                    followers: { method: "GET", url: "https://api.github.com/users/:username/followers", params: { username: "@username" }, isArray: true },
+                    following: { method: "GET", url: "https://api.github.com/users/:username/following", params: { username: "@username" }, isArray: true },
+                    formatGet: { method: "GET", transformResponse: appendTransform($http.defaults.transformResponse, formatUser)}
+                }
+            );
 
             function formatUser(user) {
                 return {

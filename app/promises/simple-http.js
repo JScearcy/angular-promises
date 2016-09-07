@@ -1,4 +1,5 @@
 'use strict';
+
 function http(options) {
     var options = options || http.defaultOptions;
     options.headers = options.headers || []

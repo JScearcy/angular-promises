@@ -8,16 +8,15 @@
 ## $q 
 * A module for handling asynchronous operations
 * Can be similar to Q/jQuery deferred, or like ES6 Promises
-* using $q as a function provides a resolve and reject path to a function, just like a Promise
+* Using $q as a function provides a resolve and reject path to a function, just like an ES-Promise
 * $q.defer() returns a deferred object that in addition to resolve and reject has notify, which can provide updates prior to completion
-* 
 
 ## $http
 * Service for communication with remote http servers ... like AJAX
 * Returns a Promise using the $q module
 * Extensible -> 
-    1. Custom headers
-    2. transformRequest and transformResponse for pre and post data processing, defaults include serializing json preflight, and stripping common json, and deserializing the response.
+    1. Custom headers -> In the $http object. Example: ` { headers: "Content-type": undefined } ` will remove content-type header
+    2. transformRequest and transformResponse for pre and post data processing, defaults include serializing json preflight, stripping common json, and deserializing the response.
     3. Caching is available with $cacheFactory:
         - Only GET and JSONP requests are cached.
         - The cache key is the request URL including search parameters; headers are not considered.
@@ -26,18 +25,19 @@
         - A cache-control header on the response does not affect if or how responses are cached
     4. Interceptors can be provided with factories containing a `response`, `responseError`, `request`, `requestError` that take the config object and return that object, a new config object, or a promise that returns the config object
 
-
 ## $resource
-* A factory that creates a resource object which abstracts away setting up singular $http calls for interacting with a RESTful api
+* Creates a resource object which abstracts away setting up singular $http calls for interacting with a RESTful api
 * Underneath the covers each call is using an $http call with a transformResponse function to format the data
 * By default the resource object contains:
 
  ```
-{ 'get':    {method:'GET'},
-  'save':   {method:'POST'},
-  'query':  {method:'GET', isArray:true},
-  'remove': {method:'DELETE'},
-  'delete': {method:'DELETE'} };
+{ 
+    'get':    {method:'GET'},
+    'save':   {method:'POST'},
+    'query':  {method:'GET', isArray:true},
+    'remove': {method:'DELETE'},
+    'delete': {method:'DELETE'}
+};
 ```
 
 * Data returned contains additional methods prefixed with a $ - $save, $remove, $delete

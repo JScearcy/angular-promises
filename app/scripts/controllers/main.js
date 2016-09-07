@@ -9,36 +9,40 @@
     function MainCtrl (gitHubService) {
         var main = this;
 
-        main.title = "Github Resource";
+        main.title = "Examples: https://github.com/JScearcy/angular-promises";
         main.username = "";
-        main.currentUser = "";
+        main.currentUser = {};
         main.resourceGet = resourceGet;
         main.resourceTransform = resourceTransform;
         main.httpGet = httpGet;
         main.httpTransformGet = httpTransformGet;
 
         function resourceGet() {
-            main.currentUser = "";
-
+            main.currentUser = {};
+            
             if (main.username.length > 0) {
                 main.currentUser = gitHubService.User.get(
-                    {username: main.username}
+                    {username: main.username},
+                    console.log,
+                    console.error
                 );
             }
         }
 
         function resourceTransform() {
-            main.currentUser = "";
+            main.currentUser = {};
 
             if (main.username.length > 0) {
                 main.currentUser = gitHubService.User.formatGet(
-                    {username: main.username}
+                    {username: main.username},
+                    console.log,
+                    console.error
                 );
             }
         }
 
         function httpGet() {
-            main.currentUser = "";
+            main.currentUser = {};
 
             if (main.username.length > 0) {
                 gitHubService.getUserHttp(main.username)
@@ -48,7 +52,7 @@
         }
 
         function httpTransformGet() {
-            main.currentUser = "";
+            main.currentUser = {};
             
             if (main.username.length > 0) {
                 gitHubService.transformHttp(main.username)
